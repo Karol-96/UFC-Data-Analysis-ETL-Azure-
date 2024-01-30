@@ -21,9 +21,6 @@ def get_ufc_page(url):
 def get_ufc_data(**kwargs):
     url = kwargs["url"]
     html1 = get_ufc_page(url)
-    print (html1)
-    # html = get_ufc_page(url)
-
     from bs4 import BeautifulSoup
 
     soup = BeautifulSoup(html1,'html.parser')
@@ -52,7 +49,6 @@ def get_ufc_data(**kwargs):
 
 
 def ufc_data_cleaning(**kwargs):
-    # url = kwargs["url"]
     data = pd.DataFrame(kwargs['ti'].xcom_pull(task_ids='get_ufc_data', key='rows'))
     print(data.columns)
     data.to_csv('hh.csv')
@@ -62,14 +58,13 @@ def ufc_data_cleaning(**kwargs):
     loss_condition = result_column.str.contains('Loss')
     print(win_condition)
     print(loss_condition)
-    # data = get_ufc_data()
     data['Result / next fight / status'] = data['Result / next fight / status'].str.strip()
     data['Result / next fight / status'] = data['Result / next fight / status'].str.replace(r'^(Win|Loss)\s*-\s*', '', regex=True)
     data = data.rename(columns= {"Result / next fight / status":"next fight / status"})
     invalid_rows = data[data['next fight / status'].apply(lambda x: len(str(x).split(' - '))) != 2]
 
     print(invalid_rows[['next fight / status']])
-    # Assuming 'ext fight / status' is the column that contains values like 'UFC 300 (Las Vegas) - Bobby Green'
+    #  'ext fight / status' is the column that contains values like 'UFC 300 (Las Vegas) - Bobby Green'
     non_empty_mask = data['next fight / status'].notnull()
     data.loc[non_empty_mask, ['Event/Location', 'Opponent']] = data.loc[non_empty_mask, 'next fight / status'].str.split(' - ', n=1, expand=True)
 
@@ -93,6 +88,7 @@ def write_ufc_data(**kwargs):
                  + "_" + str(datetime.now().time()).replace(":", "_") + '.csv')
     print('final output',data)
 
+    #Loading into Azure container
     # data.to_csv('data/' + file_name, index=False)
     data.to_csv('abfs://raw@ufcdata.dfs.core.windows.net/data/' + file_name,
                 storage_options={
