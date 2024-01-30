@@ -92,5 +92,5 @@ def write_ufc_data(**kwargs):
     # data.to_csv('data/' + file_name, index=False)
     data.to_csv('abfs://raw@ufcdata.dfs.core.windows.net/data/' + file_name,
                 storage_options={
-                    'account_key': 'gQygp7fkkrwEgrN0dHOSwIs17y5uSGrKjkMb0l/6nlWTkZTVxkhWkjd7IluKg9Db3ibRYTPWMhEg+AStHWnIkg=='
+                    'account_key': ''
                 }, index=False)
