@@ -1,11 +1,11 @@
 # UFC-Data-Analysis-ETL-Azure-
 
-This Python-based project crawls data from Wikipedia using Apache Airflow, cleans it and pushes it Azure Data Lake for processing.
+This Python-based project crawls data from Wikipedia using Apache Airflow, cleans it and pushes it Azure Data Lake for processing. -
 
-Requirements
-Python 3.9 (minimum)
-Docker
-PostgreSQL
+Requirements -
+Python 3.9 (minimum)-
+Docker-
+PostgreSQL-
 Apache Airflow 2.6 (minimum)
 Getting Started
 
